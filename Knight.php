@@ -9,18 +9,21 @@ final class Knight extends Piece
     /**
      * @return Square[]
      */
-    public function getShortestWayToSquare(Square $squareTo): array
+    public function getShortestWayToSquare(Square $squareFrom, Square $squareTo): array
     {
         $possibleDirections = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
         $cycle = true;
         $visited = [];
 
+        $moveStack = MoveStack::create();
+        $moveStack->add($squareFrom);
+
         while ($cycle) {
             $cycle = false;
-            $lastSquare = $this->moveStack->getLastMove();
+            $lastSquare = $moveStack->getLastMove();
 
             if ($lastSquare->equals($squareTo)) {
-                return $this->moveStack->getMoves();
+                return $moveStack->getMoves();
             }
 
             foreach ($possibleDirections as [$deltaFile, $deltaRank]) {
@@ -33,7 +36,7 @@ final class Knight extends Piece
                 if ($newFile >= 0 && $newFile < 8 && $newRank >= 0 && $newRank < 8 && !isset($visited[$key])) {
                     $visited[$key] = true;
                     $cycle = true;
-                    $this->moveStack->add($newSquare);
+                    $moveStack->add($newSquare);
                 }
             }
         }
