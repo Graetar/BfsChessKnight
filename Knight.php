@@ -11,7 +11,7 @@ final class Knight extends Piece
      */
     public function getShortestWayToSquare(Square $squareFrom, Square $squareTo): array
     {
-        $possibleDirections = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
+        $possibleDirections = [[-2, -1], [-1, -2], [1, -2], [2, -1], [2, 1], [1, 2], [-1, 2], [-2, 1]];
         $cycle = true;
         $visited = [];
 
